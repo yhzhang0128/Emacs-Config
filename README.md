@@ -9,10 +9,9 @@ Language support issues can be found in `./yunhao/`
 ### Usage
 ```
   cd $HOME
-  mkdir .emacs.d
-  cd .emacs.d
   git clone https://github.com/yhzhang0128/Emacs-Config.git
-  cp .emacs $HOME/.emacs
+  mv Emacs-Config .emacs.d
+  cp .emacs.d/.emacs .emacs
 ```
 
 ### Note
