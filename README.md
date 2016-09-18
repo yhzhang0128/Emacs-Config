@@ -2,8 +2,8 @@
 
 ### Introduction
 I started to use emacs in my Program Language class for OCaml.
-I find it very fancy so and I'd like to share my configurations.
-I've ported this settings to both my Ubuntu and Mac OS X.
+I find it very fancy so that I'd like to share my configurations.
+I've ported these settings to both my Ubuntu and Mac OS X.
 Language support issues can be found in `./yunhao/`
 
 ### Usage
