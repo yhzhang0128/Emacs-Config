@@ -1,4 +1,6 @@
-((("sr-speedbar-refresh-turn-on" .
+((("1-" .
+   [1 0])
+  ("sr-speedbar-refresh-turn-on" .
    [3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 1])
   ("sr-speedbar-auto-refresh" .
    [0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0 0 1])
