@@ -4,6 +4,7 @@
 
 ;; line number
 ;;(global-linum-mode 1)
+;;(global-set-key (kbd "C-x C-g") 'goto-line)
 ;; relative line number
 (add-to-list 'load-path "~/.emacs.d/elpa/relative-line-numbers-20151006.1446")
 (require 'relative-line-numbers)
@@ -12,8 +13,18 @@
 (defun my-line-format (offset)
   "Another formatting function"
   (format "%2d: " (abs offset)))
-
 (setq relative-line-numbers-format 'my-line-format)
+;; relative move
+(defun my-relative-up (offset)
+  (interactive "^nMove Up Offset:") 
+  (goto-line (+ 1 (- (count-lines 1 (point)) offset)))
+)
+(defun my-relative-down (offset)
+  (interactive "^nMove Down Offset:")
+  (goto-line (+ 1 (+ offset (count-lines 1 (point)))))
+)
+(global-set-key (kbd "C-x C-j") 'my-relative-down)
+(global-set-key (kbd "C-x C-k") 'my-relative-up)
 
 ;; tab configuration
 (setq c-basic-offset 4)
@@ -78,4 +89,3 @@
  ;; If there is more than one, they won't work right.
  )
 
-(global-relative-line-numbers-mode)
