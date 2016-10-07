@@ -26,6 +26,11 @@
 (global-set-key (kbd "C-x C-j") 'my-relative-down)
 (global-set-key (kbd "C-x C-k") 'my-relative-up)
 
+;; show matching paranthesis
+(show-paren-mode 1)
+;; comment shotcut
+(global-set-key (kbd "C-c C-m") 'comment-or-uncomment-region)
+
 ;; tab configuration
 (setq c-basic-offset 4)
 (setq default-tab-width 4)
