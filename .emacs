@@ -1,6 +1,6 @@
 ;; tuareg: OCaml toolkit
 ;; merlin: opam install merlin
-;; elpa: auto-complete, sr-speedbar, relative-line-numbers 
+;; elpa: auto-complete, relative-line-numbers 
 
 ;; line number
 ;;(global-linum-mode 1)
@@ -38,7 +38,7 @@
 
 ;; settings for font
 (tool-bar-mode -1)
-(set-default-font "Menlo 22")
+(set-default-font "Monospace 20")
 
 ;; molokai theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/theme")
@@ -48,16 +48,18 @@
 ;; source tree
 (setq imenu-auto-scan t)
 (add-to-list 'load-path "~/.emacs.d/elpa/sr-speedbar-20150804.951")
-(require 'sr-speedbar)
-(setq sr-speedbar-right-side nil ; put on left side
-      sr-speedbar-width 27
-      sr-speedbar-max-width 27
-      sr-speedbar-auto-refresh nil
-      speedbar-use-images nil
-      speedbar-show-unknown-files t)
 
-(global-set-key (kbd "C-x P") 'sr-speedbar-toggle)
-(global-set-key (kbd "C-x p") 'sr-speedbar-close)
+
+;;(require 'sr-speedbar)
+;;(setq sr-speedbar-right-side nil ; put on left side
+;;      sr-speedbar-width 27
+;;      sr-speedbar-max-width 27
+;;      sr-speedbar-auto-refresh nil
+;;      speedbar-use-images nil
+;;      speedbar-show-unknown-files t)
+
+;;(global-set-key (kbd "C-x P") 'sr-speedbar-toggle)
+;;(global-set-key (kbd "C-x p") 'sr-speedbar-close)
 
 ;; config for package management
 (setq package-archives 
@@ -74,6 +76,21 @@
 ;; load language config
 ;;(load "~/.emacs.d/yunhao/php")
 ;;(load "~/.emacs.d/yunhao/ocaml")
+(defun set-exec-path-from-shell-PATH ()
+  (let ((path-from-shell (replace-regexp-in-string
+                          "[ \t\n]*$"
+                          ""
+                          (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+    (setenv "PATH" path-from-shell)
+    (setq eshell-path-env path-from-shell) ; for eshell users
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+(when window-system (set-exec-path-from-shell-PATH))
+(exec-path-from-shell-copy-env "GOPATH")
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(ac-config-default)
+
 
 ;; currently not used settings
 (custom-set-variables
@@ -86,7 +103,7 @@
     ("c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab" default)))
  '(package-selected-packages
    (quote
-    (relative-line-numbers sr-speedbar auto-complete ac-php-core))))
+    (relative-line-numbers auto-complete ac-php-core))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
