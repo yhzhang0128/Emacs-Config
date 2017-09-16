@@ -17,3 +17,4 @@ Language support issues can be found in `./yunhao/`
 ### Note
 * GNU Emacs24 is the version I use. Different versions may cause problems.
 * OCaml installation requires `opam` and `merlin`
+* For Golang, one need to execute 'go get -u github.com/nsf/gocode' and copy the 'bin/gocode' to a $PATH searchable location
