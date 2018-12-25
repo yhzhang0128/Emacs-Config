@@ -2,29 +2,17 @@
 ;; merlin: opam install merlin
 ;; elpa: auto-complete, relative-line-numbers 
 
-;; line number
-;;(global-linum-mode 1)
-;;(global-set-key (kbd "C-x C-g") 'goto-line)
-;; relative line number
-(add-to-list 'load-path "~/.emacs.d/elpa/relative-line-numbers-20151006.1446")
-(require 'relative-line-numbers)
-(global-relative-line-numbers-mode)
-;; align to 2 charactors
-(defun my-line-format (offset)
-  "Another formatting function"
-  (format "%2d: " (abs offset)))
-(setq relative-line-numbers-format 'my-line-format)
-;; relative move
-(defun my-relative-up (offset)
-  (interactive "^nMove Up Offset:") 
-  (goto-line (+ 1 (- (count-lines 1 (point)) offset)))
-)
-(defun my-relative-down (offset)
-  (interactive "^nMove Down Offset:")
-  (goto-line (+ 1 (+ offset (count-lines 1 (point)))))
-)
-(global-set-key (kbd "C-x C-j") 'my-relative-down)
-(global-set-key (kbd "C-x C-k") 'my-relative-up)
+;; Emacs window settings
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(menu-bar-mode -1)
+
+;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+;;(set-frame-parameter (selected-frame) 'alpha <both>)
+(set-frame-parameter (selected-frame) 'alpha '(85 . 75))
+(add-to-list 'default-frame-alist '(alpha . (85 . 75)))
+
+;; y/n instead of yes/no
+(defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
 ;; show matching paranthesis
 (show-paren-mode 1)
@@ -45,27 +33,14 @@
 (setq molokai-theme-kit t)
 (load-theme 'molokai t)
 
-;; source tree
-(setq imenu-auto-scan t)
-(add-to-list 'load-path "~/.emacs.d/elpa/sr-speedbar-20150804.951")
-
-
-;;(require 'sr-speedbar)
-;;(setq sr-speedbar-right-side nil ; put on left side
-;;      sr-speedbar-width 27
-;;      sr-speedbar-max-width 27
-;;      sr-speedbar-auto-refresh nil
-;;      speedbar-use-images nil
-;;      speedbar-show-unknown-files t)
-
-;;(global-set-key (kbd "C-x P") 'sr-speedbar-toggle)
-;;(global-set-key (kbd "C-x p") 'sr-speedbar-close)
 
 ;; config for package management
 (setq package-archives 
   '(("gnu" . "http://elpa.gnu.org/packages/")
-("marmalade" . "http://marmalade-repo.org/packages/")
-("melpa" . "http://melpa.org/packages/")))
+    ;;("marmalade" . "http://marmalade-repo.org/packages/")
+    ("melpa" . "http://melpa.org/packages/")
+   )
+)
 
 ;; initialize auto-complete
 (package-initialize)
@@ -73,37 +48,32 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20160329.2321/dict")
 (ac-config-default)
 
-;; load language config
-;;(load "~/.emacs.d/yunhao/php")
-;;(load "~/.emacs.d/yunhao/ocaml")
-(defun set-exec-path-from-shell-PATH ()
-  (let ((path-from-shell (replace-regexp-in-string
-                          "[ \t\n]*$"
-                          ""
-                          (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-    (setenv "PATH" path-from-shell)
-    (setq eshell-path-env path-from-shell) ; for eshell users
-    (setq exec-path (split-string path-from-shell path-separator))))
+;; load language config for Golang
+;; (load "~/.emacs.d/yunhao/php")
+;; (load "~/.emacs.d/yunhao/ocaml")
+;; (defun set-exec-path-from-shell-PATH ()
+;;  (let ((path-from-shell (replace-regexp-in-string
+;;                          "[ \t\n]*$"
+;;                          ""
+;;                           (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+;;     (setenv "PATH" path-from-shell)
+;;     (setq eshell-path-env path-from-shell) ; for eshell users
+;;     (setq exec-path (split-string path-from-shell path-separator))))
 
-(when window-system (set-exec-path-from-shell-PATH))
-(exec-path-from-shell-copy-env "GOPATH")
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(ac-config-default)
+;; (when window-system (set-exec-path-from-shell-PATH))
+;; (exec-path-from-shell-copy-env "GOPATH")
+;; (require 'go-autocomplete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
 
-
-;; currently not used settings
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("c3c0a3702e1d6c0373a0f6a557788dfd49ec9e66e753fb24493579859c8e95ab" default)))
  '(package-selected-packages
    (quote
-    (relative-line-numbers auto-complete ac-php-core))))
+    (neotree sr-speedbar relative-line-numbers pdf-tools nlinum go-mode go-autocomplete exec-path-from-shell ac-php-core))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -111,3 +81,9 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; pdf viewer
+(pdf-tools-install)
+
+;; neo-tree
+(require 'neotree)
+(neotree-toggle)
